@@ -1,0 +1,51 @@
+View:
+<?
+$this->widget('application.components.VkLocation.CVkLocation', array(
+    'model' => new Order(),
+    'dataSource' => 'index.php?r=site/vkLocation.dataSource',
+    // city id attribute in model
+    'cityIdAttribute' => 'city',
+    // city name attribute in model
+    'cityNameAttribute' => 'city_name',
+    // country id attribute in model
+    'countryIdAttribute' => 'country',
+
+    // html code surrounding country select
+    'countryIdHtmlPre' => '<label>Страна</label>',
+    'countryIdHtmlPost' => '<hr/>',
+    // html code surrounding city name field
+    'cityNameHtmlPre' => '<label>Город</label>',
+    'cityNameHtmlPost' => '<hr/>',
+
+    // options passed to plugin
+    'autoCompleteOptions' => array(
+        // JS code to execute on 'select' event, the selected item is
+        // available through the 'item' variable.
+        'onSelect' => 'alert("selected value : " + item.value);',
+    ),
+    // options passed to the country id input
+    'countryIdOptions' => array('style' => 'width: 200px;'),
+    // options passed to the city name input
+    'cityNameOptions' => array('size' => 20),
+));
+?>
+
+Config:
+    // autoloading model and component classes
+    'import'=>array(
+	...
+        'application.components.VkLocation.CVkLocation',
+    ),
+
+Site controller:
+    public function actions()
+    {
+        return array(
+		...
+            // vkLocation. is the prefix we are going to use on our URL
+            // for all actions within the actionProvider class
+            // we point to the location where the provider
+            // is.
+            'vkLocation.'=>'application.components.VkLocation.CVkLocation',
+        );
+    }
